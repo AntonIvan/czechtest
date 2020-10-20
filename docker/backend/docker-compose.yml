@@ -1,0 +1,37 @@
+version: '3'
+
+services:
+  czechtest_backend:
+    image: czechtest_backend
+    build:
+      context: .
+      dockerfile: Dockerfile
+    links:
+      - czechtest-mysql
+    volumes:
+      - /app/czech2:/app
+
+  czechtest-frontend:
+    image: czechtest-frontend
+    build:
+      context: ../frontend/
+      dockerfile: Dockerfile
+    ports:
+      - 80:80
+    links:
+      - czechtest_backend
+    volumes:
+      - /app/czech2:/app
+
+  czechtest-mysql:
+    image: percona/percona-server:5.7
+    ports:
+      - 3367:3306
+    environment:
+      MYSQL_DATABASE: czech
+      MYSQL_USER: czech
+      MYSQL_PASSWORD: 12341234
+      MYSQL_ROOT_PASSWORD: 12341234
+      MYSQL_RANDOM_ROOT_PASSWORD: 12341234
+    volumes:
+      - /app/mysql/czech2-mysql:/var/lib/mysql
