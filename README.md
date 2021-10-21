@@ -5,7 +5,7 @@ sudo docker-compose build
 
 First start
 
-php artisan migrate:refresh
+php artisan migrate
 
 in czechtest_backend container
 
